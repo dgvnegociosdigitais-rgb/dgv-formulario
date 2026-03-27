@@ -255,6 +255,14 @@ input[type="url"]:focus {
   box-shadow: 0 0 0 3px rgba(0,200,255,0.08), inset 0 0 20px rgba(0,200,255,0.03);
 }
 input::placeholder { color: rgba(200,230,255,0.2); }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0,15,30,0.95) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  border-color: rgba(0,200,255,0.5) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 /* ─── PLANOS ─── */
 .plans-grid {
@@ -331,6 +339,95 @@ input::placeholder { color: rgba(200,230,255,0.2); }
   padding: 2px 7px;
   border-radius: 20px;
   margin-top: 2px;
+}
+
+/* ─── DESTAQUE FEATURED ─── */
+.plan-label-featured {
+  border-color: rgba(0,200,255,0.6) !important;
+  background: rgba(0,25,50,0.9) !important;
+  box-shadow: 0 0 30px rgba(0,200,255,0.12), inset 0 0 30px rgba(0,200,255,0.04);
+  animation: featuredPulse 3s ease-in-out infinite;
+  overflow: hidden;
+}
+.plan-option:checked + .plan-label-featured {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 40px rgba(0,200,255,0.25), inset 0 0 40px rgba(0,200,255,0.08);
+}
+
+/* Glow de fundo animado */
+.plan-featured-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(0,200,255,0.08) 0%, transparent 65%);
+  animation: featuredGlowMove 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.plan-featured-scan { display: none; }
+
+/* Nome do plano animado */
+.plan-name-featured {
+  background: linear-gradient(135deg, #fff 0%, #80e8ff 40%, #00ccff 65%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerPlan 3s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(0,200,255,0.5));
+}
+
+/* Preço animado */
+.plan-price-featured {
+  font-family: 'Orbitron', monospace;
+  font-size: 22px !important;
+  font-weight: 900;
+  background: linear-gradient(135deg, #fff 0%, #80e8ff 30%, #00d4ff 60%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerPlan 2.5s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(0,200,255,0.7));
+}
+
+/* Badge animado */
+.plan-badge-featured {
+  background: linear-gradient(135deg, #00d4ff, #0055ff, #00d4ff);
+  background-size: 200% auto;
+  animation: shimmerBadge 2s linear infinite;
+  color: #fff;
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-top: 4px;
+  box-shadow: 0 0 12px rgba(0,200,255,0.6), 0 0 24px rgba(0,100,255,0.3);
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+@keyframes featuredPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(0,200,255,0.1), inset 0 0 20px rgba(0,200,255,0.03); }
+  50%     { box-shadow: 0 0 40px rgba(0,200,255,0.22), inset 0 0 40px rgba(0,200,255,0.07); }
+}
+@keyframes featuredGlowMove {
+  0%,100% { opacity: 0.6; transform: translateX(0); }
+  50%     { opacity: 1; transform: translateX(-10px); }
+}
+@keyframes featuredScan {
+  0%   { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+@keyframes shimmerPlan {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes shimmerBadge {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
 
 /* ─── QUANTIDADE CARTÕES ─── */
@@ -547,64 +644,66 @@ input::placeholder { color: rgba(200,230,255,0.2); }
       <div class="card-title">03 — Escolha seu Plano</div>
       <div class="plans-grid">
 
-        <input type="radio" name="plano" id="p1" value="Starter|100|45.00|0.45" class="plan-option">
+        <input type="radio" name="plano" id="p1" value="Starter|100|50.00|0.50" class="plan-option">
         <label for="p1" class="plan-label">
           <div class="plan-left">
             <div class="plan-name">STARTER</div>
             <div class="plan-qty">100 compras</div>
           </div>
           <div class="plan-right">
-            <div class="plan-price">R$ 45</div>
-            <div class="plan-unit">R$0,45 / un · ↓18%</div>
+            <div class="plan-price">R$ 50</div>
+            <div class="plan-unit">R$0,50 / un · ↓9%</div>
           </div>
         </label>
 
-        <input type="radio" name="plano" id="p2" value="Básico|200|80.00|0.40" class="plan-option">
+        <input type="radio" name="plano" id="p2" value="Básico|200|90.00|0.45" class="plan-option">
         <label for="p2" class="plan-label">
           <div class="plan-left">
             <div class="plan-name">BÁSICO</div>
             <div class="plan-qty">200 compras</div>
           </div>
           <div class="plan-right">
-            <div class="plan-price">R$ 80</div>
-            <div class="plan-unit">R$0,40 / un · ↓27%</div>
+            <div class="plan-price">R$ 90</div>
+            <div class="plan-unit">R$0,45 / un · ↓18%</div>
           </div>
         </label>
 
-        <input type="radio" name="plano" id="p3" value="Popular|300|110.00|0.37" class="plan-option">
+        <input type="radio" name="plano" id="p3" value="Popular|300|130.00|0.43" class="plan-option">
         <label for="p3" class="plan-label">
           <div class="plan-left">
             <div class="plan-name">POPULAR</div>
             <div class="plan-qty">300 compras</div>
           </div>
           <div class="plan-right">
-            <div class="plan-price">R$ 110</div>
-            <div class="plan-unit">R$0,37 / un · ↓33%</div>
+            <div class="plan-price">R$ 130</div>
+            <div class="plan-unit">R$0,43 / un · ↓22%</div>
           </div>
         </label>
 
-        <input type="radio" name="plano" id="p4" value="Destaque|500|160.00|0.32" class="plan-option">
-        <label for="p4" class="plan-label">
+        <input type="radio" name="plano" id="p4" value="Destaque|500|200.00|0.40" class="plan-option">
+        <label for="p4" class="plan-label plan-label-featured">
+          <div class="plan-featured-glow"></div>
+          <div class="plan-featured-scan"></div>
           <div class="plan-left">
-            <div class="plan-name">DESTAQUE</div>
+            <div class="plan-name plan-name-featured">DESTAQUE</div>
             <div class="plan-qty">500 compras</div>
           </div>
           <div class="plan-right">
-            <div class="plan-price">R$ 160</div>
-            <div class="plan-unit">R$0,32 / un · ↓42%</div>
-            <div class="plan-badge">⚡ MAIS VANTAJOSO</div>
+            <div class="plan-price plan-price-featured">R$ 200</div>
+            <div class="plan-unit">R$0,40 / un · ↓27%</div>
+            <div class="plan-badge-featured">⚡ MAIS VANTAJOSO</div>
           </div>
         </label>
 
-        <input type="radio" name="plano" id="p5" value="Avançado|1000|280.00|0.28" class="plan-option">
+        <input type="radio" name="plano" id="p5" value="Avançado|1000|350.00|0.35" class="plan-option">
         <label for="p5" class="plan-label">
           <div class="plan-left">
             <div class="plan-name">AVANÇADO</div>
             <div class="plan-qty">1.000 compras</div>
           </div>
           <div class="plan-right">
-            <div class="plan-price">R$ 280</div>
-            <div class="plan-unit">R$0,28 / un · ↓49%</div>
+            <div class="plan-price">R$ 350</div>
+            <div class="plan-unit">R$0,35 / un · ↓36%</div>
           </div>
         </label>
 
